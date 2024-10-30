@@ -1,5 +1,6 @@
 // login_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:apo_softech_mobile_bank/providers/auth_provider.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -27,12 +28,21 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 Provider.of<AuthProvider>(context, listen: false).login(
                   emailController.text,
                   passwordController.text,
                 );
-                Navigator.pushReplacementNamed(context, '/home');
+
+                // Navigate to home screen if login successful
+                if (Provider.of<AuthProvider>(context, listen: false).user !=
+                    null) {
+                  Navigator.pushReplacementNamed(context, '/home');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Login failed')),
+                  );
+                }
               },
               child: const Text('Login'),
             ),
@@ -41,8 +51,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class Provider {
-  static of(BuildContext context, {required bool listen}) {}
 }

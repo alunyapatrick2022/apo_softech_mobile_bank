@@ -1,24 +1,18 @@
-// TODO Implement this library.
-
 // firebase_auth.dart
-// ignore: depend_on_referenced_packages
-import 'package:apo_softech_mobile_bank/screens/register_screen.dart';
-import 'package:apo_softech_mobile_bank/services/auth_service.dart';
-// ignore: depend_on_referenced_packages
-// import 'package:apo_softech_mobile_bank/services/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Sign Up (Register)
-  Future<Future?> signUp(String name, String email, String password) async {
+  Future<User?> signUp(String name, String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      User? user = result.user as User?;
+      User? user = result.user;
 
       // Update the display name
       await user?.updateDisplayName(name);
@@ -26,9 +20,7 @@ class FirebaseAuthService {
       return _auth.currentUser;
     } catch (e) {
       if (kDebugMode) {
-        if (kDebugMode) {
-          print('Error during sign up: $e');
-        }
+        print('Error during sign up: $e');
       }
       return null;
     }
@@ -62,7 +54,7 @@ class FirebaseAuthService {
   }
 
   // Get Current User
-  Future? getCurrentUser() {
+  User? getCurrentUser() {
     return _auth.currentUser;
   }
 

@@ -6,6 +6,8 @@ class AuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
   bool isAuthenticated = false;
 
+  get user => null;
+
   void login(String email, String password) async {
     await _authService.signIn(email, password);
     isAuthenticated = true;

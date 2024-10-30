@@ -1,6 +1,7 @@
+import 'package:apo_softech_mobile_bank/screens/home_screen.dart';
+import 'package:apo_softech_mobile_bank/screens/transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apo_softech_mobile_bank/screens/login_screen.dart';
-import 'package:apo_softech_mobile_bank/screens/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +24,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginScreen(),
+      home: TransactionScreen(),
       routes: {
-        '/register': (context) => RegisterScreen(),
+        '/transactionscreen': (context) => TransactionScreen(),
+        '/homescreen': (context) => const HomeScreen(),
         '/login': (context) => LoginScreen(),
       },
     );

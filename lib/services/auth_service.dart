@@ -1,49 +1,66 @@
 // auth_service.dart
-// ignore: depend_on_referenced_packages
-import 'package:apo_softech_mobile_bank/screens/register_screen.dart';
-// ignore: depend_on_referenced_packages
-// import 'package:apo_softech_mobile_bank/services/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // Sign In with Email and Password
   Future<User?> signIn(String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       return result.user;
     } catch (e) {
       if (kDebugMode) {
-        if (kDebugMode) {
-          print(e.toString());
-        }
+        print('Sign in error: ${e.toString()}');
       }
       return null;
     }
   }
 
-  Future<void> signOut() async {
-    await _auth.signOut();
+  // Register with Email and Password
+  Future<User?> register(String email, String password) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return result.user;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Registration error: ${e.toString()}');
+      }
+      return null;
+    }
   }
-}
 
-class UserCredential {
-  Future<User?>? get user => null;
-}
+  // Sign Out
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Sign out error: ${e.toString()}');
+      }
+    }
+  }
 
-class FirebaseAuth {
-  static FirebaseAuth instance;
+  // Password Reset
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Password reset error: ${e.toString()}');
+      }
+    }
+  }
 
-  Future<dynamic>? get currentUser => null;
-
-  signInWithEmailAndPassword(
-      {required String email, required String password}) {}
-
-  signOut() {}
-
-  sendPasswordResetEmail({required String email}) {}
-
-  createUserWithEmailAndPassword(
-      {required String email, required String password}) {}
+  // Get Current User
+  User? getCurrentUser() {
+    return _auth.currentUser;
+  }
 }

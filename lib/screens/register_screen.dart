@@ -51,6 +51,12 @@ class RegisterScreen extends StatelessWidget {
 }
 
 class User {
+  get uid => null;
+
+  get email => null;
+
+  get displayName => null;
+
   reload() {}
 
   updateDisplayName(String name) {}
